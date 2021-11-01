@@ -16,7 +16,7 @@ The motions of the body must obey the following conservations and thermodynamic 
         \end{align}
   \item Conservation of angular momentum:
         \begin{align}
-          \dfrac{\diff{}}{\diff{t}} \int\limits_{\body'} \bs{\upphi} \times (\rho_0 \defrate) \diff{V} = \int\limits_{\body'} \bs{\upphi} \times (\rho_0 \btb) \diff{V} + \int\limits_{\bodyboundary'} \bs{\upphi} \times (\bfP\normal_0) \diff{A}.
+          \dfrac{\diff{}}{\diff{t}} \int\limits_{\body'} \bs{\upphi} \otimes (\rho_0 \defrate) \diff{V} = \int\limits_{\body'} \bs{\upphi} \otimes (\rho_0 \btb) \diff{V} + \int\limits_{\bodyboundary'} \bs{\upphi} \otimes (\bfP\normal_0) \diff{A}.
         \end{align}
   \item The first law of thermodynamics:
         \begin{equation}
@@ -29,7 +29,7 @@ The motions of the body must obey the following conservations and thermodynamic 
           \dfrac{\diff{}}{\diff{t}} \int\limits_{\body'} s \diff{V} - \int\limits_{\body'} \dfrac{\rho_0 q}{T} \diff{V} + \int\limits_{\bodyboundary'} \dfrac{\bth \cdot \normal_0}{T} \diff{A} \geqslant 0.
         \end{align}
 \end{itemize}
-All the above conservation and thermodynamic laws hold for any arbitrary subbody $\body' \subset \body$, hence they can be written in the following local form:
+All the above conservation and thermodynamic laws hold for any arbitrary sub-body $\body' \subset \body$, hence they can be written in the following local forms:
 \begin{subequations}
   \begin{align}
      & \dot{\rho_0} = 0,                                                                                                                \\
@@ -39,12 +39,12 @@ All the above conservation and thermodynamic laws hold for any arbitrary subbody
      & \dot{s}^\text{int} = \dot{s} - \dfrac{\rho_0 q}{T} + \divergence \dfrac{\bth}{T} \geqslant 0. \label{eq: dissipation inequality} 
   \end{align}
 \end{subequations}
-Alternatively, local form of the second law can be written in terms of the internal energy density as
+Alternatively, the local form of the second law can be written in terms of the internal energy density as
 \begin{align}
   \dot{s}^\text{int} = \mathcal{P}^\text{ext} - \dot{u} - \dfrac{1}{T} \bth \cdot \grad T. \label{eq: dissipation inequality 2}
 \end{align}
 
-For convenience, the collection of thermodynamic state variables (working with the Helmholtz free energy), kinematic degrees of freedon, and internal variables are defined as
+For convenience, the collection of thermodynamic state variables (working with the Helmholtz free energy), kinematic degrees of freedom, and internal variables are defined as
 \begin{align}
   \mathcal{S} = \left\{ \mathcal{K}, T \right\}, \quad \mathcal{K} = \left\{ \bs{\upphi}, \bfZ \right\}, \quad \bfZ = \left\{ \bfF^p, \ep, d \right\}.
 \end{align}
@@ -52,7 +52,7 @@ The rates of change of the kinematic variables are denoted as $\mathcal{V} = \{ 
 \begin{align}
   \dot{\Lambda} = \{ \defrate, \dot{\defgrad}, \dot{\defgrad}^p, \epdot, \dot{d}, \grad \dot{d} \}.
 \end{align}
-Recall that the local thermodynamic state is assumed to be depend only on $\bs{\upphi}$, $\bfZ$ and $s$, i.e.
+Recall that the local thermodynamic state is assumed to depend only on $\bs{\upphi}$, $\bfZ$ and $s$, i.e.
 \begin{align}
   u = \hat{u}(\Lambda, s), \quad T = \hat{T}(\Lambda, s).
 \end{align}
@@ -83,7 +83,7 @@ It is assumed that each of the generalized forces can be additively decomposed i
     \bs{\xi} & = \bs{\xi}^\text{eq}(\Lambda, T) + \bs{\xi}^\text{vis}(\grad\dot{d}, T; \Lambda), 
   \end{align}
 \end{subequations}
-where the viscous forces vanish as the rate diminishes to preclude viscous dissipation in quasi-static processes, i.e.
+where the viscous forces must vanish as the rate diminishes to preclude viscous dissipation in quasi-static processes, i.e.
 \begin{subequations}
   \begin{align}
     \lim_{\norm{\dot{\defgrad}} \to 0^+}\bfP^\text{vis}   & = 0, \\
@@ -100,9 +100,9 @@ For convenience, the equilibrium forces and the viscous forces are collected in 
 
 The rate of the Helmholtz free energy density can be expanded as
 \begin{align}
-  \dot{\psi} = \psi_{,\defgrad}:\dot{\defgrad} + \psi_{,\defgrad^p}:\dot{\defgrad}^p + \psi_{\ep}\epdot + \psi_{,d}\dot{d} + \psi_{,\grad d}\cdot\grad d + \psi_{,T}\dot{T}. \label{eq: rate of helmholtz}
+  \dot{\psi} = \psi_{,\defgrad}:\dot{\defgrad} + \psi_{,\defgrad^p}:\dot{\defgrad}^p + \psi_{,\ep}\epdot + \psi_{,d}\dot{d} + \psi_{,\grad d}\cdot\grad d + \psi_{,T}\dot{T}. \label{eq: rate of helmholtz}
 \end{align}
-Inserting the identity \eqref{eq: rate of helmholtz} into \eqref{eq: dissipation inequality 3} and applying the Coleman-Noll procedure lead to several thermodynamic restrictions on the constitutive relations:
+Inserting the identity \eqref{eq: rate of helmholtz} into \eqref{eq: dissipation inequality 3} and applying the Coleman-Noll procedure leads to several thermodynamic restrictions on the constitutive relations:
 \begin{align}
   \bfP^\text{eq} = \psi_{,\defgrad}, \quad \bfT^\text{eq} = \psi_{,\defgrad^p}, \quad Y^\text{eq} = \psi_{,\ep}, \quad f^\text{eq} = \psi_{,d}, \quad \bs{\xi}^\text{eq} = \psi_{,\grad d}, \quad -s = \psi_{,T}. \label{eq: constitutive restrictions}
 \end{align}

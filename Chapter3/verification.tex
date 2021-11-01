@@ -1,5 +1,5 @@
 \section{Verification}
-\label{section brittle/verification}
+\label{section: Chapter3/verification}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -12,8 +12,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Uniaxial traction of a bar}
+\label{section: Chapter3/verification/bar}
 
-We first verify the uniaxial response of the quasi-brittle fracture model with pressurization. Consider a bar of length $L = \SI{400}{\milli\meter}$ and width $W = \SI{2}{\milli\meter}$ that is subject to uniaxial tension. Plane strain conditions are assumed to hold. A similar example without crack pressurization can be found in \cite{JYWu2017}. Boundary conditions are shown in \Cref{fig:bar}. Both ends of the bar are subject to monotonically increasing horizontal displacements. Only a quarter of the domain is simulated utilizing the two symmetry conditions. The domain is uniformly discretized using \texttt{QUAD4} elements, with 200 elements along the length and 1 element along the width. Included are the Young's modulus $E = \SI{3e4}{\mega\pascal}$, Poisson's ratio $\nu = 0.2$, critical fracture strength $\psi_c = \SI{1.5e-4}{\milli\joule\per\cubic\milli\meter}$, fracture toughness $\Gc = \SI{0.12}{\milli\joule\per\square\milli\meter}$, and the Griffith’s characteristic length $l_\text{ch} = \dfrac{\Gc}{2\psi_c} = \SI{400}{\milli\meter}$.
+We first verify the uniaxial response of the quasi-brittle fracture model with a pressurized crack. Consider a bar of length $2L = \SI{400}{\milli\meter}$ and width $2W = \SI{2}{\milli\meter}$ that is subject to uniaxial tension. Plane strain conditions are assumed to hold. A similar example without crack pressurization can be found in \cite{JYWu2017}. Boundary conditions are shown in \Cref{fig:bar}. Both ends of the bar are subject to monotonically increasing horizontal displacements. Only a quarter of the domain is simulated utilizing the two symmetry conditions. The domain is uniformly discretized using \texttt{QUAD4} elements, with 200 elements along the length and 1 element along the width.
+The material and model parameters are Young's modulus $E = \SI{3e4}{\mega\pascal}$, Poisson's ratio $\nu = 0.2$, critical fracture strength $\psi_c = \SI{1.5e-4}{\milli\joule\per\cubic\milli\meter}$, fracture toughness $\Gc = \SI{0.12}{\milli\joule\per\square\milli\meter}$, and the characteristic length $l_\text{ch} = \dfrac{\Gc}{2\psi_c} = \SI{400}{\milli\meter}$.
 
 \begin{figure}[!ht]
   \centering
@@ -22,56 +24,38 @@ We first verify the uniaxial response of the quasi-brittle fracture model with p
   \label{fig:bar}
 \end{figure}
 
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Chapter3/figures/bar_c}
-  \caption{Phase-field variable in initial conditions (for internal length scale $l=\SI{20}{\milli\meter}$). The red and blue color correspond to value of $10^{-3}$ and 0, respectively.}
-  \label{fig:bar_c}
-\end{figure}
-
-An arbitrarily small imperfection, $d_0 = \mathcal{O}(\epsilon)$, is introduced on the left side of the computational domain to induce localization (\Cref{fig:bar_c}).
+An arbitrarily small imperfection, $d_0 = \mathcal{O}(\epsilon)$, is introduced on the left side of the computational domain to induce localization.
 To study the effect of the pressure, different pressure values
 \begin{align*}
-  \bar{p} \in \left\{ \SI{0.2}{\mega\pascal}, \SI{0.4}{\mega\pascal}, \SI{0.6}{\mega\pascal}, \SI{0.8}{\mega\pascal}, \SI{1}{\mega\pascal} \right\}
+  \bar{p} \in \left\{ \SI{0}{\mega\pascal}, \SI{0.25}{\mega\pascal}, \SI{0.5}{\mega\pascal}, \SI{0.75}{\mega\pascal}, \SI{1}{\mega\pascal} \right\}
 \end{align*}
-are considered, with a fixed phase-field regularization length of $l = \SI{20}{\milli\meter}$. In the context of fuel fracture, the pressure on the crack surfaces can result from a pressurized gas environment. The reaction force on the left boundary in \Cref{fig:bar_pressure} shows that softening occurs simultaneously for different pressure values. With a larger pressure value, the damage grows more quickly.
-As is seen in \Cref{fig:bar_pressure_right}, the reaction force on the right boundary is balanced with the prescribed pressure once the crack has fully developed. \Cref{fig:bar_pressure_only} plots the approximated effective pressure $\widetilde{p}$ \eqref{eq:pressure_approx}, which shows good agreement with prescribed values $\bar{p}$.
+are considered. In the context of fuel fracture, the pressure on the crack surfaces can result from a pressurized gas environment.
 
-\begin{figure}[htb!]
-  \centering
-  \begin{subfigure}[t]{0.49\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{Chapter3/figures/bar_pressure_left}
-    \caption{}
-    \label{fig:bar_pressure}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.49\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{Chapter3/figures/bar_pressure_right}
-    \caption{}
-    \label{fig:bar_pressure_right}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.49\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{Chapter3/figures/bar_pressure_only}
-    \caption{}
-    \label{fig:bar_pressure_only}
-  \end{subfigure}
-  \caption{\label{fig:bar_pressure_all} A bar under uniaxial tension with different pressure values $\bar{p}$: (a) Reaction force on the left boundary. (b) Reaction force on the right boundary. (c) Regularized pressure value.}
-\end{figure}
+\input{Chapter3/figures/compare_ts}
 
-\citet{JYWu2017} demonstrated that the numerical results are independent of the phase-field regularization length for a quasi-brittle fracture model without pressure \cite{JYWu2017}. Here, we consider a series of values of phase-field regularization length
-\begin{align*}
-  l \in \left\{ \SI{5}{\milli\meter}, \SI{10}{\milli\meter}, \SI{20}{\milli\meter}, \SI{50}{\milli\meter} \right\}
-\end{align*}
-with a fixed pressure of $\bar{p}=\SI{0.4}{\mega\pascal}$. \Cref{fig:bar_length} reveals the softening behaviors to be essentially the same, regardless of the chosen regularization length $l$. This feature allows for choosing $\Gc$ and $\psi_c$ values independently from the regularization length.
+\Cref{fig: Chapter3/verification/compare_ts/p} plots the apparent traction-separation law. The traction $t$ and the separation $w$ are approximated as $t = -R_x^\text{left}$ and $w = - \int\limits_{\body_0} \btu \cdot \grad I \diff{V}$, respectively. The apparent traction separation relations for different values of pressure are virtually indistinguishable.
+\begin{remark}
+  In similar formulations of pressurized crack using phase-field (e.g. \cite{CHUKWUDOZIE2019957,Mikeli__2015,WILSON2016264}), the fact that the pressure work (or the pressure power in the current variational framework) is independent of the velocities of the phase-field, i.e. $\dot{d}, \grad \dot{d}$, is not respected. Leading to formulations of the following form:
+  \begin{subequations}
+    \begin{align}
+      \divergence \stress - \bar{p} \grad d I_{,d} & = \bs{0}, \\
+      \divergence \bs{\xi} - f                     & = 0,      
+    \end{align}
+  \end{subequations}
+  where
+  \begin{align}
+    \bs{\xi} = \dfrac{2\Gc l}{c_0} \grad d, \quad f = g_{,d}\psi^e_\activepart - \bar{p}\divergence\btu + \dfrac{\Gc}{c_0l}\alpha_{,d}.
+  \end{align}
+  Note that an additional contribution from the pressure arises in $f$, which leads to pressure-dependent traction-separation relations and critical fracture strength.
+\end{remark}
+At a given load (prescribed displacement), with a larger pressure, the separation between the crack surfaces is larger, resulting in a smaller traction. \Cref{fig: Chapter3/verification/compare_ts/l} shows the convergence of the apparent traction-separation law as $l \to 0$.
 
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.6\textwidth]{Chapter3/figures/bar_length}
-  \caption{A bar under uniaxial tension with different internal lengths $l$.}
-  \label{fig:bar_length}
-\end{figure}
+\input{Chapter3/figures/compare_r}
+
+The reaction force on the left symmetry plane (\Cref{fig: Chapter3/verification/compare_r/Rx_left_r_5,fig: Chapter3/verification/compare_r/Rx_left_r_10,fig: Chapter3/verification/compare_r/Rx_left_r_20,fig: Chapter3/verification/compare_r/Rx_left_r_50}) shows that softening occurs at the same loading for different pressure values.
+
+As is seen in \Cref{fig: Chapter3/verification/compare_r/Rx_right_r_5,fig: Chapter3/verification/compare_r/Rx_right_r_10,fig: Chapter3/verification/compare_r/Rx_right_r_20,fig: Chapter3/verification/compare_r/Rx_right_r_50}, the reaction force on the right boundary is balanced by the prescribed pressure once the crack has fully developed.
+The approximated effective pressure $\widetilde{p}$ \eqref{eq:pressure_approx} (\Cref{fig: Chapter3/verification/compare_r/p_r_5,fig: Chapter3/verification/compare_r/p_r_10,fig: Chapter3/verification/compare_r/p_r_20,fig: Chapter3/verification/compare_r/p_r_50}) also shows good agreement with the prescribed values $\bar{p}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -84,13 +68,14 @@ with a fixed pressure of $\bar{p}=\SI{0.4}{\mega\pascal}$. \Cref{fig:bar_length}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pressurized crack propagation}
+\label{section: Chapter3/verification/propagation}
 
-Next, we verify fracture propagation conditions predicted by the quasi-brittle fracture model using a benchmark problem proposed by \citet{WILSON2016264}. This problem serves to verify whether cracks should propagate once a critical pressure loading is applied. In \Cref{fig:sneddon_c}, an initial crack is prescribed in the center with a length of $2a$. As shown in \Cref{fig:sneddon_c0}, the phase-field is initialized to be 1.0 only for those nodes on the bottom boundary belonging to the crack set, the phase-field variable is regularized to satisfy the governing equations, as shown in \Cref{fig:sneddon_c1}. Note that this differs from the approach suggested in \cite{WILSON2016264,YOSHIOKA2020113210} which involves imposing initial values for a set of elements.
-Utilizing the symmetry, only half of the domain with size $L \times L/2$ is used (\Cref{fig:sneddon_mesh}). The ratio $L/a$ is taken to be 20. All outer surfaces are fixed. A prescribed pressure is increased until the crack starts to propagate. The propagation of the crack at fixed pressure conditions is unstable. According to the linear elastic fracture mechanics (LEFM) solution, the normalized critical pressure is given as:
+Next, we verify fracture propagation conditions predicted by the quasi-brittle fracture model using a benchmark problem proposed by \citet{WILSON2016264}. This problem serves to verify the propagation conditions once a critical pressure is attained. In \Cref{fig:sneddon_c}, an initial crack is prescribed in the center with a length of $2a$. As shown in \Cref{fig:sneddon_c0}, the phase-field is initialized to be 1 only for those nodes on the bottom boundary belonging to the crack set. The phase-field variable is then regularized to satisfy the governing equations, as shown in \Cref{fig:sneddon_c1}. Note that this differs from the approach suggested in \cite{WILSON2016264,YOSHIOKA2020113210} which involves imposing initial values for a set of elements.
+Utilizing the symmetry, only half of the domain with size $L \times L/2$ is used (\Cref{fig:sneddon_mesh}). The ratio $L/a$ is taken to be 20. All outer surfaces are fixed. The prescribed pressure is increased until the crack starts to propagate. The propagation of the crack right after the critical pressure is attained is unstable. According to the linear elastic fracture mechanics (LEFM) solution, the normalized critical pressure is given as:
 \begin{equation}
   \dfrac{p_c}{\sigma_0} = \sqrt{\dfrac{l}{\pi a}}, \quad \sigma_0=\sqrt{\dfrac{E}{(1-\nu^2)} \dfrac{\Gc^\text{eff}}{l}},
 \end{equation}
-where $\Gc^\text{eff}$ is the effective fracture toughness in the phase-field fracture model and is given as \cite{Bourding2008,YOSHIOKA2020113210}:
+where $\Gc^\text{eff}$ is the effective fracture toughness (considering the phase-field regularization) \cite{Bourding2008,YOSHIOKA2020113210} and is given as:
 \begin{equation}
   \Gc^\text{eff} = \Gc\left(\dfrac{h}{4c_0l}+1\right).
 \end{equation}
@@ -121,12 +106,48 @@ Note that the LEFM solution is based on a brittle fracture model. A comparison b
     \caption{}
     \label{fig:sneddon_c}
   \end{subfigure}
-  \caption[Sneddon benchmark problem.]{\label{fig:sneddon}Pressurized crack propagation problem: (a) Initial values are imposed on crack surface nodes (zoomed view). (b) Regularized phase-field variable after one time step (zoomed view). (c) Mesh with five levels of local refinement. (d) Pre-existing crack. The red and blue color correspond to value of 1.0 and 0, respectively.}
+  \caption[Sneddon benchmark problem.]{\label{fig:sneddon}Pressurized crack propagation problem: (a) Initial values are imposed on crack surface nodes (zoomed view). (b) Regularized phase-field variable after one time step (zoomed view). (c) Mesh with five levels of local refinement. (d) Pre-existing crack. The red and blue color correspond to value of 1 and 0, respectively.}
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.6\textwidth]{Chapter3/figures/critical_pressure}
+  \tikzsetnextfilenamesafe{Chapter3/verification/critical_pressure}
+  \begin{tikzpicture}
+    \begin{axis}[
+        width=0.9\textwidth,
+        height=0.7\textwidth,
+        xmin=0,
+        xmax=20,
+        ymin=0,
+        ymax=0.5,
+        xlabel=$a/l$,ylabel=$p/\sigma_0$,
+        scaled x ticks=false,
+        yticklabel style={
+            /pgf/number format/fixed,
+            /pgf/number format/precision=2
+          },
+        xticklabel style={
+            /pgf/number format/fixed,
+            /pgf/number format/precision=2
+          },
+        legend style={
+            at={(0.95,0.95)},
+            anchor=north east,
+            nodes={scale=0.8, transform shape},
+            fill=none,
+            draw=none,
+            cells={align=left}
+          },
+        legend cell align={left}
+      ]
+      \addplot +[black,thick,domain=0:20,samples=100,mark=none] {sqrt(0.001*1.12433979929/(1-0.2*0.2)/3.1415926/0.02/x)/0.237101223};
+      \addplot +[mark color=black,draw=none,mark size=3pt] table[x expr=\thisrowno{0}/0.02,y expr=\thisrowno{1}/0.237101223,col sep=comma]{Chapter3/data/critical_pressure_numerical.csv};
+      \addplot +[mark color=black,draw=none,mark size=3pt] table[x expr=\thisrowno{0}/0.02,y expr=\thisrowno{2}/0.237101223,col sep=comma]{Chapter3/data/critical_pressure_numerical.csv};
+      \addplot +[mark color=black,draw=none,mark size=3pt] table[x expr=\thisrowno{0}/0.02,y expr=\thisrowno{3}/0.237101223,col sep=comma]{Chapter3/data/critical_pressure_numerical.csv};
+      \addplot +[mark color=black,draw=none,mark size=3pt] table[x expr=\thisrowno{0}/0.02,y expr=\thisrowno{4}/0.237101223,col sep=comma]{Chapter3/data/critical_pressure_numerical.csv};
+      \legend{LEFM solution,$\sigma_c=\SI{0.05}{\mega\pascal}$,$\sigma_c=\SI{0.1}{\mega\pascal}$,$\sigma_c=\SI{0.15}{\mega\pascal}$,$\sigma_c=\SI{0.2}{\mega\pascal}$}
+    \end{axis}
+  \end{tikzpicture}
   \caption{Comparison between the numerical results and the LEFM solution for the critical pressure values.}
   \label{fig:critical_presssure}
 \end{figure}
